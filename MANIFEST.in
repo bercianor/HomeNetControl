@@ -1,0 +1,3 @@
+include LICENSE change.log
+include ez_setup.py make
+include init/homenetcontrol conf_files/config.ini conf_files/bot.ini

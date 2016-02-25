@@ -1,0 +1,20 @@
+[main]
+msg_desc = Control your net. Check if watched users are at home and if not allowed devices are connected. Get notifications and status via telegram and test the connection bandwidth
+msg_log = Log the output to a file stored in /var/log.
+
+[bot]
+msg_hello = Hello %s
+msg_registered = Ok %s, you're registered
+msg_help = This bot do nothing, /help will show you this message and any other text will be echoed to you.
+
+[check_connection]
+msg_log = Time: %s -> Download speed: %s Mbits. Upload speed: %sMbits.
+msg_nocon = Time: %s -> No Internet connection.
+msg_notif = Time: %s -> Speed fall below normal. Download speed: %sMbits. Upload speed: %sMbits.
+
+[check_devices]
+msg_inhouse = %s: at home.
+msg_outhouse = %s: out home.
+msg_arrivehouse = New user connected at home. %s has arrived.
+msg_lefthouse = User disconnected from home. %s has left.
+msg_notallowed = Not allowed device detected. IP: %s. MAC: %s.

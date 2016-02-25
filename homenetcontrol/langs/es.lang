@@ -1,0 +1,20 @@
+[main]
+msg_desc = Controla tu red. Comprueba si hay usuarios en seguimiento en casa, o si se ha conectado algún dispositivo no autorizado. Recibe notificaciones y estado por telegram y comprueba la velocidad de tu conexión a Internet.
+msg_log = Guarda los mensajes del programa en un archivo en  /var/log.
+
+[bot]
+msg_hello = Hola %s.
+msg_registered = Ok %s, estás registrado.
+msg_help = Este bot no hace nada, el comando /help te monstrará este mensaje y cualquier otro texto te será devuelto igual.
+
+[check_connection]
+msg_log = Hora: %s -> Velocidad de descarga: %sMbits. Velocidad de subida: %sMbits.
+msg_nocon = Hora: %s -> No hay conexión a Internet.
+msg_notif = Hora: %s -> La conexión ha caído por debajo de lo normal. Velocidad de descarga: %sMbits. Velocidad de subida: %sMbits.
+
+[check_devices]
+msg_inhouse = %s: en casa.
+msg_outhouse = %s: fuera de casa.
+msg_arrivehouse = Nuevo usuario en casa. %s ha llegado.
+msg_lefthouse = Usuario desconectado de casa. %s ha salido.
+msg_notallowed = Dispositivo no autorizado detectado. IP: %s. MAC: %s.
