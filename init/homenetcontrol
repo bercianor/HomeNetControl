@@ -45,22 +45,22 @@ case "$1" in
     start)
         # Checked the PID file exists and check the actual status of process
         if [ -e $PIDFILE ]; then
-            status_of_proc --pidfile $PIDFILE $DAEMON $NAME >/dev/null && status="0" || status="$?"
+            status_of_proc -p $PIDFILE $DAEMON $NAME >/dev/null && status="0" || status="$?"
             # If the status is SUCCESS then don't need to start again.
             if [ $status = "0" ]; then
                 log_warning_msg "Service already running\n"
                 exit 0
             else
                 # Start the daemon.
-                log_daemon_msg "Starting the process1" "$NAME\n"
-                start-stop-daemon --start --quiet --oknodo --background --make-pidfile --pidfile $PIDFILE --startas /bin/bash -- -c "exec $DAEMON $ARGS > $LOGFILE 2>&1"
+                log_daemon_msg "Starting the process" "$NAME\n"
+                start-stop-daemon --start --quiet --oknodo --background --make-pidfile --pidfile $PIDFILE --startas /bin/bash -- -c "exec $DAEMON $ARGS >> $LOGFILE 2>&1"
                 log_end_msg $?
                 exit $?
             fi
         else
             # Start the daemon.
-            log_daemon_msg "Starting the process2" "$NAME\n"
-            start-stop-daemon --start --quiet --oknodo --background --make-pidfile --pidfile $PIDFILE --startas /bin/bash -- -c "exec $DAEMON $ARGS > $LOGFILE 2>&1"
+            log_daemon_msg "Starting the process" "$NAME\n"
+            start-stop-daemon --start --quiet --oknodo --background --make-pidfile --pidfile $PIDFILE --startas /bin/bash -- -c "exec $DAEMON $ARGS >> $LOGFILE 2>&1"
             log_end_msg $?
             exit $?
         fi
@@ -68,7 +68,7 @@ case "$1" in
     stop)
         # Stop the daemon.
         if [ -e $PIDFILE ]; then
-            status_of_proc --pidfile $PIDFILE $DAEMON $NAME >/dev/null && status="0" || status="$?"
+            status_of_proc -p $PIDFILE $DAEMON $NAME >/dev/null && status="0" || status="$?"
             if [ "$status" = "0" ]; then
                 log_daemon_msg "Shutting down the process" "$NAME\n"
                 start-stop-daemon --stop --quiet --oknodo --retry TERM/30/KILL/5 --pidfile $PIDFILE && {
@@ -88,7 +88,7 @@ case "$1" in
     restart|force-reload)
         # Stop the daemon.
         if [ -e $PIDFILE ]; then
-            status_of_proc --pidfile $PIDFILE $DAEMON $NAME >/dev/null && status="0" || status="$?"
+            status_of_proc -p $PIDFILE $DAEMON $NAME >/dev/null && status="0" || status="$?"
             if [ "$status" = "0" ]; then
                 log_daemon_msg "Shutting down the process" "$NAME\n"
                 start-stop-daemon --stop --quiet --oknodo --retry TERM/5/KILL/5 --pidfile $PIDFILE && {
@@ -103,14 +103,14 @@ case "$1" in
         fi
         # Start the daemon.
         log_daemon_msg "Restarting the process" "$NAME\n"
-        start-stop-daemon --start --quiet --oknodo --background --make-pidfile --pidfile $PIDFILE --startas /bin/bash -- -c "exec $DAEMON $ARGS > $LOGFILE 2>&1"
+        start-stop-daemon --start --quiet --oknodo --background --make-pidfile --pidfile $PIDFILE --startas /bin/bash -- -c "exec $DAEMON $ARGS >> $LOGFILE 2>&1"
         log_end_msg $?
         exit $?
         ;;
     status)
         log_daemon_msg "Checking for the process" "$NAME\n"
         # Check the status of the process.
-        status_of_proc --pidfile $PIDFILE $DAEMON $NAME process && exit 0 || exit $?
+        status_of_proc -p $PIDFILE $DAEMON $NAME process && exit 0 || exit $?
         ;;
     *)
         log_warning_msg "Usage: $0 {start|stop|restart|force-reload|status}"
